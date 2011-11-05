@@ -6,9 +6,14 @@ class HashKey
   end
 
   def compute
-    all_params = @params.map do |key, value|
+    Digest::SHA1.hexdigest join_all_params
+  end
+
+  private
+
+  def join_all_params
+    @params.map do |key, value|
       "#{key}=#{value}"
     end.join("&")
-    Digest::SHA1.hexdigest all_params
   end
 end
