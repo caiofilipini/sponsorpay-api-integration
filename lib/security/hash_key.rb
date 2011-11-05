@@ -1,7 +1,10 @@
 require "digest/sha1"
 
 class HashKey
-  def initialize(params)
+  JOIN_CHAR = "&"
+
+  def initialize(api_key, params)
+    @api_key = api_key
     @params = params
   end
 
@@ -12,8 +15,9 @@ class HashKey
   private
 
   def join_all_params
-    @params.sort.map do |key, value|
+    joined_params = @params.sort.map do |key, value|
       "#{key}=#{value}"
-    end.join("&")
+    end.join(JOIN_CHAR)
+    "#{joined_params}#{JOIN_CHAR}#{@api_key}"
   end
 end

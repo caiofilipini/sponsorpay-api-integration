@@ -5,8 +5,10 @@ require "security/hash_key"
 describe HashKey do
 
   describe "#compute" do
+    let(:api_key) { "b07a12df7d52e6c118e5d47d3f9e60135b109a1f" }
+
     subject {
-      HashKey.new(:first => "i_am_number_one", :second => "and_i_am_number_two")
+      HashKey.new(api_key, :first => "i_am_number_one", :second => "and_i_am_number_two")
     }
 
     it "should compute valid SHA1 hash" do
@@ -19,7 +21,7 @@ describe HashKey do
 
     context "parameter order" do
       subject {
-        HashKey.new(:unordered => "foo", :stuff => "bar")
+        HashKey.new(api_key, :unordered => "foo", :stuff => "bar")
       }
 
       it "should be sorted alphabetically by name" do
@@ -32,7 +34,7 @@ describe HashKey do
   private
 
   def sha1_for(string)
-    Digest::SHA1.hexdigest string
+    Digest::SHA1.hexdigest "#{string}&#{api_key}"
   end
 
 end
