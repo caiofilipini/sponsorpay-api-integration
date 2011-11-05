@@ -12,7 +12,7 @@ class HashKey
   private
 
   def join_all_params
-    @params.map do |key, value|
+    @params.sort.map do |key, value|
       "#{key}=#{value}"
     end.join("&")
   end
