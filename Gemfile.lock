@@ -2,6 +2,14 @@ GEM
   remote: http://rubygems.org/
   specs:
     diff-lcs (1.1.3)
+    httparty (0.8.1)
+      multi_json
+      multi_xml
+    metaclass (0.0.1)
+    mocha (0.10.0)
+      metaclass (~> 0.0.1)
+    multi_json (1.0.3)
+    multi_xml (0.4.1)
     rack (1.3.5)
     rack-protection (1.1.4)
       rack
@@ -25,6 +33,8 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  httparty
+  mocha
   rack-test
   rspec
   sinatra
