@@ -1,5 +1,6 @@
 require "httparty"
 require "security/hash_key"
+require "security/response_signature"
 
 class MobileOffer
   include HTTParty
@@ -20,6 +21,8 @@ class MobileOffer
 
   def self.get_offers_as_json(params)
     response = self.get("/feed/v1/offers.json", :query => params)
+    signature = response.headers["X-Sponsorpay-Response-Signature"]
+    return { "code"  => "INVALID_RESPONSE_SIGNATURE" } unless ResponseSignature.new(api_key, response).valid?(signature)
     as_json response
   end
 

@@ -16,7 +16,20 @@ describe MobileOffer do
     context "with invalid response" do
       before :each do
         response = mock("Response")
+        response.stubs(:headers).returns({"X-Sponsorpay-Response-Signature" => "abc123"})
         response.stubs(:body).returns("{\"code\":\"ERROR_INVALID_UID\", \"message\":\"An invalid user id (uid) was given as a parameter in the request.\"}")
+        MobileOffer.stubs(:get).returns(response)
+      end
+
+      it "should return empty Array" do
+        MobileOffer.offers_for(params).should be_empty
+      end
+    end
+
+    context "with invalid response signature" do
+      before :each do
+        response = mock("Response")
+        response.stubs(:headers).returns({"X-Sponsorpay-Response-Signature" => "abc123"})
         MobileOffer.stubs(:get).returns(response)
       end
 
@@ -29,7 +42,12 @@ describe MobileOffer do
       before :each do
         @response = mock("Response")
         @response.stubs(:body).returns(response_as_json)
+        @response.stubs(:headers).returns({})
         MobileOffer.stubs(:get).returns(@response)
+
+        signature = mock("ResponseSignature")
+        signature.stubs(:valid?).returns(true)
+        ResponseSignature.stubs(:new).returns(signature)
       end
 
       it "should return offers as an Array" do
