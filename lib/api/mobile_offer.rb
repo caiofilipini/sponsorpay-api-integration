@@ -9,14 +9,24 @@ class MobileOffer
   def self.offers_for(params)
     params.merge! app_params
     params.merge! :hashkey => hash_key_for(params)
-    response = self.get("/feed/v1/offers.json", :query => params)
-    JSON.parse response.body
+
+    response_as_json = get_offers_as_json(params)
+    response_as_json["offers"]
   end
 
   private
 
+  def self.get_offers_as_json(params)
+    response = self.get("/feed/v1/offers.json", :query => params)
+    as_json response
+  end
+
   def self.hash_key_for(params)
     HashKey.new(api_key, params).compute
+  end
+
+  def self.as_json(response)
+    JSON.parse response.body
   end
 
   def self.api_key
