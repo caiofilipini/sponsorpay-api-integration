@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>SponsorPay API Integration</title>
+  </head>
+  <body>
+    <h1>Offers</h1>
+    <p>
+      <table>
+        <thead>
+          <tr>
+            <th>Title</th>
+            <th>Payout</th>
+            <th>Thumbnail</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% offers.each do |offer| %>
+          <tr>
+            <td><%= offer["title"] %></td>
+            <td><%= offer["payout"] %></td>
+            <td><img src="<%= offer["thumbnail"]["lowres"] %>" /></td>
+          </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </p>
+  </body>
+</html>

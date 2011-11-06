@@ -17,5 +17,27 @@ describe ApiIntegrationApp do
       last_response.body.should match /<form/
     end
   end
+
+  context "POST /offers" do
+    let(:params) do
+      {
+        "uid" => "player1",
+        "pub0" => "campaign2",
+        "page" => "2"
+      }
+    end
+
+    it "should request offers via API" do
+      MobileOffer.expects(:offers_for).with(params)
+      post "/offers", params
+    end
+
+    it "should render received offers" do
+      MobileOffer.expects(:offers_for).with(params).returns(JSON.parse(response_as_json)["offers"])
+      post "/offers", params
+      last_response.should be_ok
+      last_response.body.should match /Fussballmanager/
+    end
+  end
   
 end

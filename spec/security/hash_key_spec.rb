@@ -4,9 +4,18 @@ require "security/hash_key"
 
 describe HashKey do
 
-  describe "#compute" do
-    let(:api_key) { "b07a12df7d52e6c118e5d47d3f9e60135b109a1f" }
+  let(:api_key) { "b07a12df7d52e6c118e5d47d3f9e60135b109a1f" }
 
+  describe "#new" do
+    subject { HashKey.new(api_key, "one" => 1, :two => 2) }
+
+    it "should convert string keys to symbols" do
+      params = subject.instance_variable_get(:@params)
+      params[:one].should == 1
+    end
+  end
+
+  describe "#compute" do
     subject {
       HashKey.new(api_key, :first => "i_am_number_one", :second => "and_i_am_number_two")
     }
