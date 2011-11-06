@@ -21,9 +21,18 @@ class MobileOffer
 
   def self.get_offers_as_json(params)
     response = self.get("/feed/v1/offers.json", :query => params)
-    signature = response.headers["X-Sponsorpay-Response-Signature"]
-    return { "code"  => "INVALID_RESPONSE_SIGNATURE" } unless ResponseSignature.new(api_key, response).valid?(signature)
+
+    unless valid_signature?(response)
+      return { "code"  => "INVALID_RESPONSE_SIGNATURE" }
+    end
+
     as_json response
+  end
+
+  def self.valid_signature?(response)
+    signature = response.headers["X-Sponsorpay-Response-Signature"]
+    response_signature = ResponseSignature.new(api_key, response.body)
+    response_signature.valid?(signature)
   end
 
   def self.hash_key_for(params)

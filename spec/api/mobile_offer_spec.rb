@@ -29,6 +29,7 @@ describe MobileOffer do
     context "with invalid response signature" do
       before :each do
         response = mock("Response")
+        response.stubs(:body).returns("")
         response.stubs(:headers).returns({"X-Sponsorpay-Response-Signature" => "abc123"})
         MobileOffer.stubs(:get).returns(response)
       end
