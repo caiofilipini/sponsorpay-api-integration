@@ -7,13 +7,15 @@ describe ApiIntegrationApp do
   include Rack::Test::Methods
 
   def app
-    ApiIntegrationApp
+    Sinatra::Application
   end
 
-  it "should render Hello World" do
-    get "/"
-    last_response.should be_ok
-    last_response.body.should == "Hello world!"
+  context "GET /" do
+    it "should render form" do
+      get "/"
+      last_response.should be_ok
+      last_response.body.should match /<form/
+    end
   end
   
 end

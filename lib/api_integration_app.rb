@@ -1,7 +1,11 @@
 require "sinatra"
 
-class ApiIntegrationApp < Sinatra::Base
+class ApiIntegrationApp
+  configure do
+    set :views, "views"
+  end
+
   get "/" do
-    "Hello world!"
+    erb :form
   end
 end
