@@ -25,7 +25,7 @@ describe HashKey do
     end
 
     it "should join parameters before computing hash" do
-      subject.compute.should == sha1_for("first=i_am_number_one&second=and_i_am_number_two")
+      subject.compute.should == sha1_for("first=i_am_number_one&second=and_i_am_number_two&#{api_key}")
     end
 
     context "parameter order" do
@@ -34,16 +34,9 @@ describe HashKey do
       }
 
       it "should be sorted alphabetically by name" do
-        expected_hash = sha1_for("stuff=bar&unordered=foo")
+        expected_hash = sha1_for("stuff=bar&unordered=foo&#{api_key}")
         subject.compute.should == expected_hash
       end
     end
   end
-
-  private
-
-  def sha1_for(string)
-    Digest::SHA1.hexdigest "#{string}&#{api_key}"
-  end
-
 end
