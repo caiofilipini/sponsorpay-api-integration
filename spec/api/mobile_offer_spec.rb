@@ -16,6 +16,7 @@ describe MobileOffer do
     before :each do
       @response = mock("Response")
       @response.stubs(:body).returns(response_as_json)
+      MobileOffer.stubs(:get).returns(@response)
     end
 
     context "API" do
@@ -32,6 +33,16 @@ describe MobileOffer do
         MobileOffer.expects(:get).with("/feed/v1/offers.json", anything).returns(@response)
         response = MobileOffer.request_for params 
         response["code"].should == "OK"
+      end
+    end
+
+    context "security" do
+      it "should compute hash key based on api key and parameters" do
+        key = mock("HashKey")
+        key.stubs(:compute).returns nil
+        HashKey.expects(:new).with("b07a12df7d52e6c118e5d47d3f9e60135b109a1f", has_key(:uid)).returns(key)
+
+        MobileOffer.request_for params
       end
     end
 

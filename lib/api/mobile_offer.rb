@@ -1,4 +1,5 @@
 require "httparty"
+require "security/hash_key"
 
 class MobileOffer
   include HTTParty
