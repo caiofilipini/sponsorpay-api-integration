@@ -11,6 +11,8 @@ class MobileOffer
     params.merge! :hashkey => hash_key_for(params)
 
     response_as_json = get_offers_as_json(params)
+    return [] unless response_as_json["code"] == "OK"
+
     response_as_json["offers"]
   end
 

@@ -6,6 +6,9 @@
   <body>
     <h1>Offers</h1>
     <p>
+      <% if offers.empty? %>
+      No offers.
+      <% else %>
       <table>
         <thead>
           <tr>
@@ -24,6 +27,10 @@
           <% end %>
         </tbody>
       </table>
+      <% end %>
+    </p>
+    <p>
+      <a href="/">Go back.</a>
     </p>
   </body>
 </html>
