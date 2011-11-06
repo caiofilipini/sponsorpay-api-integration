@@ -12,7 +12,7 @@ describe MobileOffer do
     }
   end
 
-  describe "#request_for" do
+  describe "#offers_for" do
     before :each do
       @response = mock("Response")
       @response.stubs(:body).returns(response_as_json)
@@ -26,12 +26,12 @@ describe MobileOffer do
 
       it "should expect JSON response" do
         expect_parameter :format, "json"
-        MobileOffer.request_for params
+        MobileOffer.offers_for params
       end
 
       it "should request offers" do
         MobileOffer.expects(:get).with("/feed/v1/offers.json", anything).returns(@response)
-        response = MobileOffer.request_for params 
+        response = MobileOffer.offers_for params
         response["code"].should == "OK"
       end
     end
@@ -42,7 +42,7 @@ describe MobileOffer do
         key.stubs(:compute).returns nil
         HashKey.expects(:new).with("b07a12df7d52e6c118e5d47d3f9e60135b109a1f", has_key(:uid)).returns(key)
 
-        MobileOffer.request_for params
+        MobileOffer.offers_for params
       end
     end
 
@@ -51,7 +51,7 @@ describe MobileOffer do
         [:appid, :device_id, :locale, :ip, :offer_types].each do |param_name|
           it "should include #{param_name}" do
             expect_parameter param_name
-            MobileOffer.request_for params
+            MobileOffer.offers_for params
           end
         end
 
@@ -60,12 +60,12 @@ describe MobileOffer do
           freeze_time_to now
 
           expect_parameter :timestamp, now
-          MobileOffer.request_for params
+          MobileOffer.offers_for params
         end
 
         it "should append hash key to parameters before sending API request" do
           expect_parameter :hashkey
-          MobileOffer.request_for params
+          MobileOffer.offers_for params
         end
       end
 
@@ -73,7 +73,7 @@ describe MobileOffer do
         [:uid, :pub0, :page].each do |param_name|
           it "should include #{param_name}" do
             expect_parameter param_name, params[param_name]
-            MobileOffer.request_for params
+            MobileOffer.offers_for params
           end
         end
       end

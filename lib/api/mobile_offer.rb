@@ -6,7 +6,7 @@ class MobileOffer
 
   base_uri "http://api.sponsorpay.com"
 
-  def self.request_for(params)
+  def self.offers_for(params)
     params.merge! app_params
     params.merge! :hashkey => hash_key_for(params)
     response = self.get("/feed/v1/offers.json", :query => params)
