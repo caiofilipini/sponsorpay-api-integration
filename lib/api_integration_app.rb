@@ -4,6 +4,7 @@ require "api/mobile_offer"
 class ApiIntegrationApp
   configure do
     set :views, "views"
+    set :public_folder, "public"
   end
 
   get "/" do

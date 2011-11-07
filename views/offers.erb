@@ -2,6 +2,7 @@
 <html>
   <head>
     <title>SponsorPay API Integration</title>
+    <link rel="stylesheet" type="text/css" href="/stylesheets/app.css">
   </head>
   <body>
     <h1>Offers</h1>
@@ -13,17 +14,17 @@
       <table border="1">
         <thead>
           <tr>
+            <th>Thumbnail</th>
             <th>Title</th>
             <th>Payout</th>
-            <th>Thumbnail</th>
           </tr>
         </thead>
         <tbody>
           <% offers.each do |offer| %>
           <tr>
+            <td class="thumb"><img src="<%= offer["thumbnail"]["lowres"] %>" /></td>
             <td><%= offer["title"] %></td>
-            <td><%= offer["payout"] %></td>
-            <td><img src="<%= offer["thumbnail"]["lowres"] %>" /></td>
+            <td class="value"><%= offer["payout"] %></td>
           </tr>
           <% end %>
         </tbody>
