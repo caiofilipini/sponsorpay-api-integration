@@ -1,4 +1,4 @@
-require File.expand_path('spec/spec_helper')
+require File.expand_path("spec/spec_helper")
 require "digest/sha1"
 require "security/hash_key"
 
