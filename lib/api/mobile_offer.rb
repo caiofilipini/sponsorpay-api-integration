@@ -12,7 +12,7 @@ class MobileOffer
     params.merge! :hashkey => hash_key_for(params)
 
     response_as_json = get_offers_as_json(params)
-    return [] unless response_as_json["code"] == "OK"
+    return [] unless ok? response_as_json
 
     response_as_json["offers"]
   end
@@ -27,6 +27,10 @@ class MobileOffer
     end
 
     as_json response
+  end
+
+  def self.ok?(response)
+    response["code"] == "OK"
   end
 
   def self.valid_signature?(response)
